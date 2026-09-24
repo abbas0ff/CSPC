@@ -1,22 +1,6 @@
-# CSPC - Computer Science for Physics and Chemistry
-
-My coursework repository. Each practical is under PW<n>/Lab <X>/.
-
-## Setup
-Create the environment for a given lab:
----
-
-## PW1 --- Lab A: Reproducible Foundations
-
-**What I built:**
-- Radioactive decay simulation using Python loops and vectorised NumPy with unit tests.
-
-**Speed comparison (loop vs NumPy):**
-- loop   : 12.48 s
-- numpy  : 0.0035 s
-- speed-up: ~3500 x faster
-
-**Tests:** all passing? yes
-
-**Conclusion:**
-- Vectorised NumPy operations significantly outperform pure Python loops for large simulations. Setting up automated pytest unit tests and Conda environment configuration guarantees project reproducibility.
+## PW1 - Lab B 
+- **Author:** Eltun Abbasov
+- **Status:** Completeddd
+- **Environment:** Python 3.11 (Miniconda `cspc` env)
+- **Tools used:** numpy, matplotlib, snakemake
+- **Description:** Plotted observed decay data against the analytical law and automated the workflow using Snakemake. and used Ai for understant the some lines of the code because l'm in trouble to memorize some fparts of phyton 
