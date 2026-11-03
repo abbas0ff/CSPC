@@ -24,7 +24,7 @@
 ## PW2 --- Lab A: Motion from Tracking Data
 
 **motion from traciking data:**  in this pw l try to measure acceleration velocity and trajectory why accelereation is to noisy because when we take its two derivatives it give us some errors and we lose some part of our number and making the acceleration look very rough
-**what l build:** ## PW2 --- Lab A: Motion from Tracking Data
+**what l build:** ## PW2 --- Lab A: Motion from Tracking datas
 
 ### What I Built
  **analysis.py**: A Python script that processes noisy free-fall position data (freefall.csv), computes velocity and acceleration using np.gradient, and recovers position back using cumulative_trapezoid.
@@ -74,3 +74,52 @@ The goal of this lab was to understand numerical optimization techniques and app
 ### Key Learnings
 - **Equivalence of Root-Finding and Minimization:** Chemical equilibrium can be framed either as finding roots of $k_{imbalance}(x) = 0$ or minimizing $k_{imbalance}(x)^2 \to 0$; bothe yield identical physical equilibria.
 - **Algorithm Selection:** Simple convex functions behave predictably across all methods, but complex multi-peak functions require bounded algorithms like SLSQP or careful initial guessessss
+
+
+
+
+
+
+
+# PW3: Data, Distributions, Testing, and Causation
+
+## Session 1: Data Characterisation (Heart Disease Dataset)
+
+### 1. Data Overview & Shapes
+first of all l install `heart.csv` containing medical records for ~300 patients and focused on four continuous variables: `age`, `chol` (cholesterol), `trestbps` (resting blood pressure), and `thalach` (max heart rate) visualised distributions using 15-bin histograms in `heart_distributions.png`.
+
+### 2. Normality Testing
+l use  the Shapiro-Wilk test (`scipy.stats.shapiro`) alongside visual check:
+- **`age`**: Approximately normal (p > 0.05) symmetry observed around 55 years.
+- **`trestbps`**: Roughly normal (p > 0.05) slight right skew at higher pressures.
+- **`thalach`**: Approximately normal (p > 0.05) bell-shaped around 150 bpm.
+- **`chol`**: **Not normal** (p < 0.05) noticeable right skew with outliers above 300 mg/dL
+## Session 2: Statistical Conclusions & Causation
+
+### 3. Comparing Heart Rate (`thalach`) by Disease Status
+divided patients into healthy (`target = 0`) and unhealthly which is heart disease (`target = 1`) groups:
+- **Healthy mean:** 158.38 \pm 1.50 bpm
+- **Disease mean:** 139.26 \pm 1.92 bpm
+- **Two-sample t-test:** p = 3.46 \times 10^{-14}
+
+**Conclusion:** The difference is statistically significant patients with heart disease reach a noticeably lower maximum heart rate on averag plotted with SEM error bars in `thalach_by_target.png`
+
+### 4. Age vs Max Heart Rate
+Calculated ppearson correlation between `age` and `thalach`:
+- Pearson r$: -0.3938 ($p = 1.11 \times 10^{-12})
+
+**Conclusion:** Moderate negative linear relationship as age increases maximum achievable heart rate tends to decrease scatter plot and trend line saved in `age_vs_thalach.png`
+
+### 5. Chemical Exposure Mystery (Causation vs Correlation)
+Analyzed `chemicals_cancer.csv` to identify which chemical causes tumors malignancy:
+- **Naive Analysis:** Calculating correlations across the full dataset suggested benzene was strongly associated with malignancy (r \approx 0.70), while Cadmium appeared weak (r \approx 0.20)
+- **Controlled Analysis:** Controlled for `pollution_index` by filtering to a narrow slice (40\text{th} to 60\text{th} percentile)
+- **Result:** After fixing `pollution_index`, Benzene's correlation dropped close to zero, whereas Cadmium showed a strong positive correlation (r \approx 0.65)
+
+**Verdict:** **Cadmium is the true cause of malignancy.** Benzene only looked guilty naively because high-pollution areas had elevated Benzene levels (confounding variable) plotted comparison in `chemical_causation.png`
+
+### Bonus: Category Unpredictability
+Calculated Shannon Entropy for the `target` column:
+- **Proportions:** ~54% class 1, ~46% class 0
+- **Entropy:** $0.9951$ bits (close to maximum $1.0$ bit)
+- **Interpretation:** The dataset is nearly balanced making the target category highly unpredictable without feature data
